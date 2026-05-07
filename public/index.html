@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Canteen — Cafeteria Ordering</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="app">
+  <nav>
+    <div class="nav-logo">The <span>Canteen</span></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="nav-tabs">
+        <button class="nav-tab" id="loginBtn" onclick="navigate('/login')">Login</button>
+        <button class="nav-tab active" onclick="showPage('menu', this)">Menu</button>
+        <button class="nav-tab" onclick="showPage('orders', this)">Orders</button>
+      </div>
+      <button class="cart-btn" onclick="toggleCart()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Cart <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MENU PAGE -->
+  <div class="page active" id="page-menu">
+    <div class="page-title">What are you having?</div>
+    <div class="page-sub">Fresh food made daily — order and pick up at the counter</div>
+
+    <div class="category-tabs">
+      <button class="cat-tab active" onclick="filterCat('all', this)">All items</button>
+      <button class="cat-tab" onclick="filterCat('mains', this)">Mains</button>
+      <button class="cat-tab" onclick="filterCat('snacks', this)">Snacks</button>
+      <button class="cat-tab" onclick="filterCat('drinks', this)">Drinks</button>
+      <button class="cat-tab" onclick="filterCat('desserts', this)">Desserts</button>
+    </div>
+
+    <div class="menu-grid" id="menu-grid"></div>
+
+    <!-- Cart panel -->
+    <div class="cart-panel" id="cart-panel" style="display:none">
+      <div class="cart-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Your order
+      </div>
+      <input class="name-input" id="customer-name" placeholder="Your name (for pickup)">
+      <div id="cart-items-list"></div>
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cart-total">kr 0</span>
+      </div>
+      <button class="checkout-btn" onclick="placeOrder()">Place order</button>
+    </div>
+  </div>
+
+  <!-- ORDERS PAGE -->
+  <div class="page" id="page-orders">
+    <div class="page-title">All orders</div>
+    <div class="page-sub">Track and manage today's orders</div>
+    <div class="orders-stats">
+      <div class="stat-card"><div class="stat-label">Total orders</div><div class="stat-val" id="stat-total">0</div></div>
+      <div class="stat-card"><div class="stat-label">Preparing</div><div class="stat-val" id="stat-prep">0</div></div>
+      <div class="stat-card"><div class="stat-label">Ready</div><div class="stat-val" id="stat-ready">0</div></div>
+    </div>
+    <div class="filter-row">
+      <button class="filter-chip active" onclick="filterOrders('all', this)">All</button>
+      <button class="filter-chip" onclick="filterOrders('Preparing', this)">Preparing</button>
+      <button class="filter-chip" onclick="filterOrders('Ready', this)">Ready</button>
+      <button class="filter-chip" onclick="filterOrders('Delivered', this)">Delivered</button>
+    </div>
+    <div id="orders-list"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>

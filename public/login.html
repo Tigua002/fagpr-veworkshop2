@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Canteen — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #FDF8F2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    /* ── Card ─────────────────────────────────────────────────────────────── */
+    .login-card {
+      background: #fff;
+      border: 0.5px solid #E8DDD4;
+      border-radius: 20px;
+      padding: 36px 32px 28px;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    /* ── Brand header ─────────────────────────────────────────────────────── */
+    .brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      background: #3D2B1F;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 24px;
+    }
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: #3D2B1F;
+      letter-spacing: 0.2px;
+    }
+    .brand-name span { color: #D4600A; }
+    .brand-sub {
+      font-size: 13px;
+      color: #7A6558;
+      margin-top: 3px;
+    }
+
+    /* ── Divider ──────────────────────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 0.5px solid #E8DDD4;
+      margin: 0 0 24px;
+    }
+
+    /* ── Role toggle ──────────────────────────────────────────────────────── */
+    .role-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #7A6558;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 8px;
+    }
+    .role-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 22px;
+    }
+    .role-btn {
+      border: 0.5px solid #E8DDD4;
+      background: #FDF8F2;
+      color: #7A6558;
+      padding: 9px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .role-btn.active {
+      background: #3D2B1F;
+      border-color: #3D2B1F;
+      color: #FDF8F2;
+    }
+
+    /* ── Form fields ──────────────────────────────────────────────────────── */
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #3D2B1F;
+      margin-bottom: 5px;
+    }
+    .field-wrap { position: relative; }
+    .field input {
+      width: 100%;
+      border: 0.5px solid #E8DDD4;
+      border-radius: 9px;
+      padding: 10px 36px 10px 12px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: #3D2B1F;
+      background: #FDF8F2;
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    .field input:focus {
+      border-color: #D4600A;
+      background: #fff;
+    }
+    .field input::placeholder { color: #B8ADA7; }
+
+    /* ── Eye toggle button ────────────────────────────────────────────────── */
+    .eye-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #B8ADA7;
+      font-size: 16px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+    .eye-btn:hover { color: #7A6558; }
+
+    /* ── Forgot password ──────────────────────────────────────────────────── */
+    .forgot { text-align: right; margin-top: 4px; }
+    .forgot a {
+      font-size: 12px;
+      color: #D4600A;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .forgot a:hover { text-decoration: underline; }
+
+    /* ── Feedback messages ────────────────────────────────────────────────── */
+    .error-msg {
+      background: #FEF3C7;
+      border: 0.5px solid #FDE68A;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #92400E;
+      margin-top: 10px;
+      display: none;
+    }
+    .success-msg {
+      background: #EAF5EE;
+      border: 0.5px solid #A7D7B8;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #2D6A4F;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* ── Primary login button ─────────────────────────────────────────────── */
+    .login-btn {
+      width: 100%;
+      background: #3D2B1F;
+      color: #FDF8F2;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      margin-top: 18px;
+      letter-spacing: 0.2px;
+      transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .login-btn:hover { background: #2a1e15; }
+    .login-btn:disabled { background: #B8ADA7; cursor: not-allowed; }
+
+    /* ── OR divider ───────────────────────────────────────────────────────── */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+      font-size: 12px;
+      color: #B8ADA7;
+    }
+    .or-divider::before,
+    .or-divider::after {
+      content: '';
+      flex: 1;
+      border-top: 0.5px solid #E8DDD4;
+    }
+
+    /* ── Guest button ─────────────────────────────────────────────────────── */
+    .guest-btn {
+      width: 100%;
+      background: transparent;
+      border: 0.5px solid #E8DDD4;
+      border-radius: 10px;
+      padding: 11px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      color: #3D2B1F;
+      transition: all 0.15s;
+    }
+    .guest-btn:hover {
+      background: #FDF8F2;
+      border-color: #D4600A;
+      color: #D4600A;
+    }
+
+    /* ── Footer note ──────────────────────────────────────────────────────── */
+    .footer-note {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 12px;
+      color: #B8ADA7;
+    }
+    .footer-note a {
+      color: #D4600A;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .footer-note a:hover { text-decoration: underline; }
+
+    /* ── Spinner animation ────────────────────────────────────────────────── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+
+    <!-- Brand header -->
+    <div class="brand">
+      <div class="brand-icon">🍽️</div>
+      <div class="brand-name">The <span>Canteen</span></div>
+      <div class="brand-sub">Sign in to continue ordering</div>
+    </div>
+    <hr class="divider">
+
+    <!-- Role selector -->
+    <div class="role-label">Sign in as</div>
+    <div class="role-toggle">
+      <button class="role-btn active" id="role-customer" onclick="setRole('customer')">
+        <i class="ti ti-user" aria-hidden="true"></i> Customer
+      </button>
+      <button class="role-btn" id="role-staff" onclick="setRole('staff')">
+        <i class="ti ti-tools-kitchen-2" aria-hidden="true"></i> Staff
+      </button>
+    </div>
+
+    <!-- Email field -->
+    <div class="field">
+      <label for="email-input">Email address</label>
+      <div class="field-wrap">
+        <input
+          type="email"
+          id="email-input"
+          placeholder="you@example.com"
+          oninput="clearMessages()"
+        >
+      </div>
+    </div>
+
+    <!-- Password field -->
+    <div class="field">
+      <label for="pw-input">Password</label>
+      <div class="field-wrap">
+        <input
+          type="password"
+          id="pw-input"
+          placeholder="••••••••"
+          oninput="clearMessages()"
+        >
+        <button class="eye-btn" onclick="togglePw()" aria-label="Toggle password visibility">
+          <i class="ti ti-eye" id="eye-icon" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="forgot">
+        <a onclick="showForgot()">Forgot password?</a>
+      </div>
+    </div>
+
+    <!-- Feedback messages -->
+    <div class="error-msg"   id="error-msg"></div>
+    <div class="success-msg" id="success-msg"></div>
+
+    <!-- Primary action -->
+    <button class="login-btn" id="login-btn" onclick="handleLogin()">
+      <i class="ti ti-login" aria-hidden="true"></i>
+      Sign in
+    </button>
+
+    <div class="or-divider">or</div>
+
+    <!-- Guest access -->
+    <button class="guest-btn" onclick="handleGuest()">Continue as guest</button>
+
+    <div class="footer-note">
+      No account? <a onclick="showRegister()">Ask your cafeteria manager</a>
+    </div>
+
+  </div><!-- /.login-card -->
+
+
+<script src="login.js"></script>
+</body>
+</html>
