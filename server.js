@@ -182,7 +182,7 @@ app.get("/get/user/:token", (req, res) => {
                     code: 500,
                 });
             }
-            res.status(200).send({
+            return res.status(200).send({
                 message: "Successfully retrieved user",
                 code: 200,
                 data: JSON.parse(JSON.stringify(result)),
@@ -214,7 +214,7 @@ app.post("/set/status", (req, res) => {
                     code: 500,
                 });
             }
-            res.status(200).send({
+            return res.status(200).send({
                 message: "Successfully updated order",
                 code: 200,
             });
